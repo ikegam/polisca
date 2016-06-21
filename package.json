@@ -4,20 +4,24 @@
   "description": "Visualization for politician's abilitty",
   "main": "index.js",
   "dependencies": {
-    "babelify": "^7.3.0",
     "babel-preset-react": "^6.5.0",
+    "babelify": "^7.3.0",
+    "gulp": "^3.9.1",
     "gulp-webserver": "^0.9.1",
     "highcharts": "^4.2.5",
     "highcharts-more": "^0.1.2",
-    "react": "^15.1.0",
     "papaparse": "^4.1.2",
-    "react-bootstrap": "^0.29.4",
-    "gulp": "^3.9.1",
-    "react-overlays": "^0.6.3",
-    "react-dom": "^15.1.0",
-    "react-highcharts": "^8.3.2"
+    "react": "^15.2.0-rc.1",
+    "react-bootstrap": "^0.29.5",
+    "react-dom": "^15.2.0-rc.1",
+    "react-highcharts": "^8.3.3",
+    "react-overlays": "^0.6.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "gulp-browserify": "^0.5.1",
+    "vinyl-source-stream": "^1.1.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

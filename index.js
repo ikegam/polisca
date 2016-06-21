@@ -155,23 +155,31 @@ var DetailView = React.createClass({
 var MemberDetail = React.createClass({
   onMouseEnter: function() {
     var item = this.props.item;
-    ReactDOM.render(<div key={item.id}>
+    ReactDOM.render(<div id={item.id}>
         <ChartView key={item.id} item={item} />
         <DetailView key-={item.id} item={item} />
       </div>, document.getElementById(item.id));
   },
   onMouseOut: function() {
-
+    var item = this.props.item;
+    ReactDOM.render(<div id={item.id}>
+      </div>, document.getElementById(item.id));
   },
   render: function() {
     var item = this.props.item;
-    return (<Row key={item.id} onMouseOver={this.onMouseEnter} >
-        <Col onMouseOver={this.onMouseEnter} onMouseOut={this.onMouseOut} >{item.text}
+    return (
+      <Row key={item.id} onMouseOver={this.onMouseEnter} onMouseOut={this.onMouseOut}>
+        <Col>{item.text}
           <ul>
           <li>{item.party}</li>
           <li>{item.state}</li>
-          </ul></Col><Col><div id={item.id}></div>
-        </Col></Row>);
+          </ul>
+        </Col>
+        <Col>
+          <div id={item.id}></div>
+        </Col>
+      </Row>
+    );
   }
 });
 
@@ -227,18 +235,4 @@ members_array.data.forEach(function(key, index) {
   item_members.push({text: key[0], party: key[2], state: key[3], id: index});
 });
 
-ReactDOM.render(
-        <VisualizeApp items={item_members}/>
-    , document.getElementById('container'));
-
-//    <Col xs={8} md={8}>
-//    <AutoAffix viewportOffsetTop={15}>
-//      <div><div id='chart'></div><div id="external_link"></div></div>
-//    </AutoAffix></Col>
-
-//ReactDOM.render(<VisualizeApp />, document.getElementById('root'));
-
-members_array.data
-
-//console.log(members_array.data);
-//console.log(speech_index_array.data);
+ReactDOM.render(<VisualizeApp items={item_members}/>, document.getElementById('container'));

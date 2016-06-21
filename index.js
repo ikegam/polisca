@@ -155,29 +155,30 @@ var DetailView = React.createClass({
 var MemberDetail = React.createClass({
   onMouseEnter: function() {
     var item = this.props.item;
-    ReactDOM.render(<div><ChartView key={item.id} item={item} /><DetailView key-={item.id} item={item} /></div>, document.getElementById(item.id));
+    ReactDOM.render(<div key={item.id}>
+        <ChartView key={item.id} item={item} />
+        <DetailView key-={item.id} item={item} />
+      </div>, document.getElementById(item.id));
+  },
+  onMouseOut: function() {
+
   },
   render: function() {
     var item = this.props.item;
     return (<Row key={item.id} onMouseOver={this.onMouseEnter} >
-        <Col onMouseOver={this.onMouseEnter}>{item.text}
+        <Col onMouseOver={this.onMouseEnter} onMouseOut={this.onMouseOut} >{item.text}
           <ul>
           <li>{item.party}</li>
           <li>{item.state}</li>
-          </ul></Col><Col><div id={item.id}></div></Col></Row>);
-  }
-});
-
-var MemberList = React.createClass({
-  render: function() {
-    var createItem = function(item) {
-      return (<MemberDetail key={item.id} item={item} />);
-    };
-   return (<div>{this.props.items.map(createItem)}</div>);
+          </ul></Col><Col><div id={item.id}></div>
+        </Col></Row>);
   }
 });
 
 var VisualizeApp = React.createClass({
+  getInitialState: function() {
+    return {items: this.props.items};
+  },
   onChange: function(e) {
     var item_members = [];
     var value = e.target.value;
@@ -197,11 +198,21 @@ var VisualizeApp = React.createClass({
     this.setState({items: item_members});
   },
   render: function() {
+    var createItem = function(item) {
+      return (<MemberDetail key={item.id} item={item} />);
+    };
     return (
-        <div>
-        <span>検索 </span>
-        <input onChange={this.onChange} />
-        </div>
+        <Grid>
+          <Row className="show-grid">
+            <Col xs={12} md={4}>
+              <Row>
+                <span>検索 </span>
+                <input onChange={this.onChange} />
+              </Row>
+            </Col>
+          </Row>
+          {this.state.items.map(createItem)}
+        </Grid>
         );
   }
 });
@@ -216,14 +227,9 @@ members_array.data.forEach(function(key, index) {
   item_members.push({text: key[0], party: key[2], state: key[3], id: index});
 });
 
-ReactDOM.render(<Grid>
-    <Row className="show-grid">
-    <Col xs={12} md={4}>
-      <Row><VisualizeApp items={item_members}/></Row>
-      </Col>
-    </Row>
-    <MemberList items={item_members} />
-    </Grid>, document.getElementById('container'));
+ReactDOM.render(
+        <VisualizeApp items={item_members}/>
+    , document.getElementById('container'));
 
 //    <Col xs={8} md={8}>
 //    <AutoAffix viewportOffsetTop={15}>
